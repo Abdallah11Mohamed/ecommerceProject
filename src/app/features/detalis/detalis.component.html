@@ -1,0 +1,43 @@
+<section class="py-12">
+  <div class="container xl:w-[95%] mx-auto px-4">
+    @if (loading) {
+      <p class="text-gray-400">جاري التحميل...</p>
+    } @else if (error) {
+      <p class="text-gray-400">المنتج غير متوفر.</p>
+    } @else if (product) {
+      <div class="flex flex-col lg:flex-row gap-8">
+        <div class="lg:w-1/2">
+          <img
+            [src]="product.imageCover"
+            [alt]="product.title"
+            class="w-full rounded-lg object-cover shadow-lg"
+          />
+        </div>
+        <div class="lg:w-1/2 flex flex-col gap-4">
+          <h3 class="text-gray-400 text-sm">{{ product.category.name }}</h3>
+          <h1 class="text-2xl md:text-3xl font-semibold text-white">
+            {{ product.title }}
+          </h1>
+          <p class="text-gray-300 leading-relaxed">{{ product.description }}</p>
+          <div class="flex items-center gap-2 text-yellow-500">
+            <i class="fas fa-star"></i>
+            <span class="text-white">{{ product.ratingsAverage }}</span>
+            <span class="text-gray-400 text-sm">({{ product.ratingsQuantity }} تقييم)</span>
+          </div>
+          <div class="flex items-center gap-4 text-lg">
+            <span class="text-white font-semibold">{{ product.price }} EGP</span>
+            @if (product.priceAfterDiscount) {
+              <span class="text-gray-400 line-through">{{ product.price }} EGP</span>
+              <span class="text-green-400">{{ product.priceAfterDiscount }} EGP</span>
+            }
+          </div>
+          <button
+            class="btn-main w-full max-w-xs mt-4"
+          >
+            Add to cart
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</section>
