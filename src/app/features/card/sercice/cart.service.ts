@@ -47,13 +47,20 @@ UpdataProductcart(id: string, count: number): Observable<CartDEtilsResponse> {
     
   );
 }
-chekOutsessaion(cartId:string|null, checkOutdata:object):Observable<PaymentDetilsResponse>{
-  return this.httpClient.post<PaymentDetilsResponse>( environment.base_url +`orders/checkout-session/${cartId}?url=http://localhost:4200` ,
-checkOutdata,
+chekOutsessaion(
+  cartId: string | null,
+  checkOutdata: object
+): Observable<PaymentDetilsResponse> {
 
+  const returnUrl =
+    typeof window !== 'undefined'
+      ? window.location.origin
+      : '';
 
-  )
+  return this.httpClient.post<PaymentDetilsResponse>(
+    `${environment.base_url}orders/checkout-session/${cartId}?url=${encodeURIComponent(returnUrl)}`,
+    checkOutdata
+  );
 }
-
 }
  
