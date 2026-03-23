@@ -153,13 +153,27 @@
 
   
  <div class="flex flex-wrap justify-end">
-      <button type="submit" class=" w-full px-3 py-2.5 text-sm text-gray-800
-         bg-gray-100 border border-gray-300 rounded-md
-         placeholder-gray-400
-         focus:outline-none focus:ring-2 focus:ring-green-600/40 focus:border-green-600
-         transition  ">Register</button>
+      <button type="submit"
+  class="w-full px-4 py-2.5 text-sm font-medium text-white
+         bg-green-600 rounded-md
+         hover:bg-green-700
+         focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2
+         transition duration-200">
+  Register
+</button>
+
+
+         
+ @if (isLoading) {
+         <i class="fas fa-spinner animate-spin text-blue-100 "></i>
+      }                                                             
+
     </div> 
 </form>
+
+
+
+
 
 </section>
 

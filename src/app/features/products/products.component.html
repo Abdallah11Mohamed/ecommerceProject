@@ -1,66 +1,73 @@
-<section class="py-16">
-  <div class="container xl:w-[95%]">
+<section class="py-16 bg-gray-50 min-h-screen">
+  <div class="container xl:w-[90%] mx-auto">
 
-  
-    <div class="mb-3 mx-auto w-1/2 flex justify-center">
-      <input type="search" id="search" class="main-input mb-3" placeholder="search for a product" 
-      [(ngModel)]="text"/>
-    </div>
     
+    <div class="mb-10 flex justify-center">
+      <div class="relative w-full md:w-1/2">
+        <input
+          type="search"
+          id="search"
+          placeholder="Search for a product..."
+          [(ngModel)]="text"
+          class="w-full px-5 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 shadow-sm"
+        />
+        <i class="fas fa-search absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+      </div>
+    </div>
 
+   
+    
+    <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
 
+      @for (product of productList() | paginate:paginate | search:text; track product._id) {
 
-
-
-
-
-
-
-
-
-
-
-
-    <div class="parent grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-
-      @for (product of productList() | paginate:paginate |search:text; track product._id) {
-
-        <div class="card flex flex-col justify-between h-full group/card overflow-hidden">
-
-         <div
-  class="cursor-pointer"
-  [routerLink]="['/main/details', product._id]"
->
+        <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden flex flex-col group">
 
           
-            <img
-              [src]="product.imageCover"
-              [alt]="product.title"
-            />
+          <div
+            class="cursor-pointer p-3"
+            [routerLink]="['/main/details', product._id]"
+          >
+            <div class="overflow-hidden rounded-xl">
+              <img
+                [src]="product.imageCover"
+                [alt]="product.title"
+                class="w-full h-48 object-cover group-hover:scale-105 transition duration-500"
+              />
+            </div>
 
-            <h3 class="text-sm text-gray-300">
+            <h3 class="text-xs text-green-600 mt-3">
               {{ product.category.name }}
             </h3>
 
-            <h4 class="text-lg pb-2">
-              {{ product.title | uppercase}}
+            <h4 class="text-md font-semibold mt-1 line-clamp-2">
+              {{ product.title | uppercase }}
             </h4>
           </div>
 
-          <div class="flex flex-wrap items-center justify-between pb-4">
-            <span>{{ product.price }} EGP</span>
+         
+          
+          <div class="px-3 pb-3 mt-auto flex justify-between items-center">
+            <span class="font-bold text-gray-800">
+              {{ product.price }} EGP
+            </span>
 
-            <span>
-              <i class="fas fa-star text-yellow-500"></i>
+            <span class="flex items-center gap-1 text-sm">
+              <i class="fas fa-star text-yellow-400"></i>
               {{ product.ratingsAverage }}
             </span>
           </div>
 
-          <button (click)="AddProductItemtocart(product._id)"
-            class="btn-main w-full translate-y-[120%] group-hover/card:translate-y-0 transition-transform duration-500"
-          >
-            Add to cart
-          </button>
+         
+          
+          <div class="px-3 pb-4">
+            <button
+              (click)="AddProductItemtocart(product._id)"
+              class="w-full py-2 rounded-lg bg-green-600 text-white font-medium opacity-0 translate-y-5 group-hover:opacity-100 group-hover:translate-y-0 transition duration-300 hover:bg-green-700"
+            >
+              Add to Cart
+            </button>
+          </div>
 
         </div>
 
@@ -68,21 +75,16 @@
 
     </div>
 
-
-<pagination-controls  id="products"
-                      (pageChange)="pageChanged($event)"
-                     
-                      >
-</pagination-controls>
-
-
-
-
-
-
-
-
+   
+    
+    <div class="mt-10 flex justify-center">
+      <pagination-controls
+        id="products"
+        (pageChange)="pageChanged($event)"
+        class="custom-pagination"
+      >
+      </pagination-controls>
+    </div>
 
   </div>
 </section>
-

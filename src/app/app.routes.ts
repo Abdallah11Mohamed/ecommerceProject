@@ -54,6 +54,8 @@ export const routes: Routes = [
           import('./features/products/products.component')
             .then(m => m.ProductsComponent),
       },
+
+      
       {
         path: 'categories',
         title: 'Categories',

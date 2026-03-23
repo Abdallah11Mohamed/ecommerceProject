@@ -2,17 +2,20 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../services/authantication/auth.service';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators, ɵInternalFormsSharedModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [ɵInternalFormsSharedModule,ReactiveFormsModule],
+  imports: [ɵInternalFormsSharedModule,ReactiveFormsModule,RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
  private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+
+  isLoading:boolean = false;     
+
 
   loginForm = new FormGroup(
     {
@@ -33,24 +36,20 @@ export class LoginComponent {
     
   );
 
-  handleConfirmPassword(group: AbstractControl) {
-    const password = group.get('password')?.value;
-    const rePassword = group.get('rePassword')?.value;
-
-    return password === rePassword ? null : { mismatch: true };
-  }
+ 
+  
 
   submitloginForm(): void {
 
 
-
+    this.isLoading = true;
     
     if (this.loginForm.valid) {
          this.authService.sendloginData(this.loginForm.value).subscribe({
       next: (res) => {
         console.log(res);
         if (res.message==="success") {
-
+    this.isLoading = false;
           localStorage.setItem("userToken", res.token)
            this.authService.decodeToken(); 
           setTimeout(() => {
@@ -61,6 +60,8 @@ export class LoginComponent {
       },
       error: (err) => {
         console.log(err);
+
+            this.isLoading = false;
       },
     });
     }
